@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import { postsFetchRequest } from "actions";
 import * as routes from 'routes';
 import PostItem from 'components/PostItem';
+import Button from 'bloomer/lib/elements/Button';
+import Section from 'bloomer/lib/layout/Section';
 
 
 class PostsList extends Component {
@@ -24,7 +26,7 @@ class PostsList extends Component {
   renderElements() {
     let add = [];
     if(this.props.isAuthed) {
-      add = [<button key="add" onClick={this.addPost}>Add Post</button>]
+      add = [<Section key="add"><Button onClick={this.addPost}>Add Post</Button></Section>]
     }
     return add.concat(this.props.posts.map((post) => {
       return <PostItem key={post.id} post={post} />

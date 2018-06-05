@@ -3,14 +3,13 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 
 import * as routes from 'routes'
-import { Navbar } from 'bloomer/lib/components/Navbar/Navbar';
-import { NavbarBrand } from 'bloomer/lib/components/Navbar/NavbarBrand';
-import { NavbarItem } from 'bloomer/lib/components/Navbar/NavbarItem';
-import { NavbarMenu } from 'bloomer/lib/components/Navbar/NavbarMenu';
-import { NavbarStart } from 'bloomer/lib/components/Navbar/NavbarStart';
-import { NavbarBurger } from 'bloomer/lib/components/Navbar/NavbarBurger';
-import { NavbarEnd } from 'bloomer/lib/components/Navbar/NavbarEnd';
-import { withHelpersModifiers } from 'bloomer';
+import Navbar from 'bloomer/lib/components/Navbar/Navbar';
+import NavbarBrand from 'bloomer/lib/components/Navbar/NavbarBrand';
+import NavbarItem from 'bloomer/lib/components/Navbar/NavbarItem';
+import NavbarMenu from 'bloomer/lib/components/Navbar/NavbarMenu';
+import NavbarStart from 'bloomer/lib/components/Navbar/NavbarStart';
+import NavbarBurger from 'bloomer/lib/components/Navbar/NavbarBurger';
+import NavbarEnd from 'bloomer/lib/components/Navbar/NavbarEnd';
 
 class Navigation extends Component {
   constructor() {
@@ -45,13 +44,13 @@ class Navigation extends Component {
   }
 }
 
-const AuthNav = withHelpersModifiers((props) =>
+const AuthNav = (props) =>
   <NavbarItem {...props}><Link to={routes.LOGOUT}> Log out</Link></NavbarItem>
-)
 
-const NoAuthNav = withHelpersModifiers((props) =>
+
+const NoAuthNav = (props) =>
   <NavbarItem {...props}><Link to={routes.LOGIN}> Log In </Link></NavbarItem>
-)
+
 
 
 const mapStateToProps = (state) => {

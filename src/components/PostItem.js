@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 import * as routes from 'routes'
 // Individual import to prevent importing what we don't need
-import { Columns } from 'bloomer/lib/grid/Columns';
-import { Column } from 'bloomer/lib/grid/Column';
-import { Title } from 'bloomer/lib/elements/Title';
-import { Button } from 'bloomer/lib/elements/Button';
-import { Section } from 'bloomer/lib/layout/Section';
+import Columns from 'bloomer/lib/grid/Columns';
+import Column from 'bloomer/lib/grid/Column';
+import Button from 'bloomer/lib/elements/Button';
+import Section from 'bloomer/lib/layout/Section';
+import Title from 'bloomer/lib/elements/Title';
 
 const PostItem = (props) => {
   let {post} = props;
@@ -16,10 +16,10 @@ const PostItem = (props) => {
 <Section>
       <Columns isCentered isMobile>
         <Column isSize="2/3">
-          <Title hasTextAlign="centered">{post.title}</Title>
+          <Title>{post.title}</Title>
           <hr />
           <p>{post.intro}...</p>
-          <Column hasTextAlign="centered">
+          <Column >
             <Link to={`${routes.BLOG}/${post.slug}`}>
               <Button>Read More</Button>
             </Link>

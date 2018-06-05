@@ -4,16 +4,16 @@ import { connect } from 'react-redux'
 
 import { authRequest } from "../actions";
 import * as routes from '../routes'
-import { Field } from 'bloomer/lib/elements/Form/Field/Field';
-import { Input } from 'bloomer/lib/elements/Form/Input';
-import { Section } from 'bloomer/lib/layout/Section';
-import { Container } from 'bloomer/lib/layout/Container';
-import { Columns } from 'bloomer/lib/grid/Columns';
-import { Column } from 'bloomer/lib/grid/Column';
-import { Box } from 'bloomer/lib/elements/Box';
-import { Label } from 'bloomer/lib/elements/Form/Label';
-import { Button } from 'bloomer/lib/elements/Button';
-import { Help } from 'bloomer/lib/elements/Form/Help';
+import Field from 'bloomer/lib/elements/Form/Field/Field';
+import Input from 'bloomer/lib/elements/Form/Input';
+import Section from 'bloomer/lib/layout/Section';
+import Container from 'bloomer/lib/layout/Container';
+import Columns from 'bloomer/lib/grid/Columns';
+import Column from 'bloomer/lib/grid/Column';
+import Box from 'bloomer/lib/elements/Box';
+import Label from 'bloomer/lib/elements/Form/Label';
+import Button from 'bloomer/lib/elements/Button';
+import Help from 'bloomer/lib/elements/Form/Help';
 
 const INITIAL_STATE = {
   email: '',

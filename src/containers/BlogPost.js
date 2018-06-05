@@ -6,15 +6,14 @@ import { connect } from 'react-redux'
 import { postFetchRequest, postUpdate, postDelete } from "../actions";
 import * as routes from '../routes'
 
-import { Content } from 'bloomer/lib/elements/Content';
-import { Title } from 'bloomer/lib/elements/Title';
-import { Section } from 'bloomer/lib/layout/Section';
-import { Breadcrumb } from 'bloomer/lib/components/Breadcrumb/Breadcrumb';
-import { BreadcrumbItem } from 'bloomer/lib/components/Breadcrumb/BreadcrumbItem';
-import { Container } from 'bloomer/lib/layout/Container';
-
-import asyncComponent from 'containers/AsyncComponent';
-const AsyncEditor = asyncComponent(() => import('containers/Editor'));
+import Content from 'bloomer/lib/elements/Content';
+import Title from 'bloomer/lib/elements/Title';
+import Section from 'bloomer/lib/layout/Section';
+import Breadcrumb from 'bloomer/lib/components/Breadcrumb/Breadcrumb';
+import BreadcrumbItem from 'bloomer/lib/components/Breadcrumb/BreadcrumbItem';
+import Container from 'bloomer/lib/layout/Container';
+import Button from 'bloomer/lib/elements/Button';
+import AsyncEditor from 'containers/AsyncEditor'
 
 
 class BlogPost extends Component {
@@ -56,8 +55,9 @@ class BlogPost extends Component {
   renderPost(post, isAuthed) {
     if(this.state.editing) {
       return (
-        <div>
-          <button onClick={() => this.setState({ editing: false })}>Back</button>
+        <Section>
+        <Container>
+          <Button onClick={() => this.setState({ editing: false })}>Back</Button>
           <AsyncEditor 
             submitText="Update"
             initialBody={ post.body }
@@ -67,22 +67,23 @@ class BlogPost extends Component {
             handleSubmit={ this.update }
             delete={ this.delete }
           />
-        </div>
+        </Container>
+        </Section>
       )
     }
     else {
       let elements = [
-          <Breadcrumb>
+          <Breadcrumb key='breadcrumb'>
             <ul>
-              <BreadcrumbItem><Link to={routes.HOME}>Home</Link></BreadcrumbItem>
-              <BreadcrumbItem isActive><a>{post.title}</a></BreadcrumbItem>              
+              <BreadcrumbItem key='home'><Link to={routes.HOME}>Home</Link></BreadcrumbItem>
+              <BreadcrumbItem key='current' isActive><a>{post.title}</a></BreadcrumbItem>              
             </ul>
           </Breadcrumb>,
           <Title key="title">{post.title}</Title>,
           <Content key="body" dangerouslySetInnerHTML={{__html: post.body}} ></Content>
       ];
       if(isAuthed) {
-        elements = [<button key="edit" onClick={() => this.setState({ editing: true })}>Edit</button>].concat(elements);
+        elements = [<Button key="edit" isColor='info' style={{marginBottom: '1rem'}} onClick={() => this.setState({ editing: true })}>Edit</Button>].concat(elements);
       }
       return <Section><Container>{elements}</Container></Section>;
     }

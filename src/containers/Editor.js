@@ -1,6 +1,24 @@
 import React from 'react'
 import ReactQuill, { Quill } from 'react-quill'
 import ImageResize from 'quill-image-resize-module';
+import Label from 'bloomer/lib/elements/Form/Label';
+import Input from 'bloomer/lib/elements/Form/Input';
+import Field from 'bloomer/lib/elements/Form/Field/Field';
+import Columns from 'bloomer/lib/grid/Columns';
+import Column from 'bloomer/lib/grid/Column';
+import TextArea from 'bloomer/lib/elements/Form/TextArea';
+import Button from 'bloomer/lib/elements/Button';
+import Control from 'bloomer/lib/elements/Form/Control';
+
+import Modal from 'bloomer/lib/components/Modal/Modal';
+import ModalBackground from 'bloomer/lib/components/Modal/ModalBackground';
+import ModalCardHeader from 'bloomer/lib/components/Modal/Card/ModalCardHeader';
+import ModalCard from 'bloomer/lib/components/Modal/Card/ModalCard';
+import ModalCardTitle from 'bloomer/lib/components/Modal/Card/ModalCardTitle';
+import Delete from 'bloomer/lib/elements/Delete';
+import ModalCardBody from 'bloomer/lib/components/Modal/Card/ModalCardBody';
+import ModalCardFooter from 'bloomer/lib/components/Modal/Card/ModalCardFooter';
+import Content from 'bloomer/lib/elements/Content';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -66,6 +84,7 @@ class Editor extends React.PureComponent {
       slug: this.props.initialSlug || '',
       description: this.props.initialDescription || '',
       intro: '',
+      deleteWarn: false,
       showRaw: false,
     };
     this.handleChangeBody = this.handleChangeBody.bind(this);
@@ -75,6 +94,7 @@ class Editor extends React.PureComponent {
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);    
     this.submit = this.submit.bind(this);
+    this.toggleWarning = this.toggleWarning.bind(this);
   }
 
   handleChangeBody(html, delta, source, editor) {
@@ -117,19 +137,35 @@ class Editor extends React.PureComponent {
     }
   }
 
+  toggleWarning() {
+    this.setState({ deleteWarn: !this.state.deleteWarn })
+  }
+
   render() {
     return (
-        <form className="text-editor">
-          <label htmlFor="title" >Title: </label>
-          <input type="text" value={this.state.titleText} onChange={this.handleChangeTitle} id="title" name="title" />
-
-          <label htmlFor="slug">Slug: </label>
-          <input type="text" value={this.state.slug} onChange={this.handleChangeSlug} id="slug" name="slug" />
-          
-          <label htmlFor="slug">Description: </label>
-          <input type="text" value={this.state.description} onChange={this.handleChangeDescription} id="description" name="description" />
-
-          <label htmlFor="body">Body: </label>
+<div>
+<form className="text-editor">
+  <Columns isMultiline>
+        <Column size='1/2'>
+        <Field>
+          <Label htmlFor="title" >Title: </Label>
+          <Input type="text" value={this.state.titleText} onChange={this.handleChangeTitle} id="title" name="title" />
+        </Field>
+        </Column>
+        <Column>
+        <Field>
+          <Label htmlFor="slug">Slug: </Label>
+          <Input type="text" value={this.state.slug} onChange={this.handleChangeSlug} id="slug" name="slug" />
+        </Field>
+        </Column>
+        <Column isSize='full'>
+        <Field>        
+          <Label htmlFor="slug">Description: </Label>
+          <Input type="text" value={this.state.description} onChange={this.handleChangeDescription} id="description" name="description" />
+        </Field>          
+        </Column>
+        <Column isSize='full'>
+          <Label htmlFor="body">Body: </Label>
           <CustomToolbar handleRaw={this.handleClickShowRaw}/>
           <ReactQuill
             id="body"
@@ -139,15 +175,41 @@ class Editor extends React.PureComponent {
             modules={Editor.modules}
             theme="snow"
           />
-          <textarea
+          <TextArea
               style={this.state.showRaw ? {display: "block"} : {display: "none"}}
               className="raw-editor"
               onChange={(e) => this.handleChangeRaw(e.target.value)}
               value={this.state.rawHtml}
             />
-          <button type="submit" onClick={this.submit}>{this.props.submitText}</button>
-          {this.props.delete ? <button onClick={this.props.delete}>Delete</button> : null}       
-        </form>
+          </Column>
+  </Columns>
+        <Field isGrouped>
+          <Control>
+            <Button type="submit" onClick={this.submit}>{this.props.submitText}</Button>
+          </Control>
+          {this.props.delete ? <Control><Button isColor='danger' onClick={this.toggleWarning}>Delete</Button></Control> : null}
+        </Field>
+</form>
+
+<Modal isActive={this.state.deleteWarn}>
+<ModalBackground onClick={this.toggleWarning} />
+<ModalCard>
+        <ModalCardHeader>
+          <ModalCardTitle>Delete?</ModalCardTitle>
+          <Delete onClick={this.toggleWarning} />
+        </ModalCardHeader>
+        <ModalCardBody>
+        <Content>
+          <h3>This is a permanant action and cannot be undone</h3>
+        </Content>
+        </ModalCardBody>
+        <ModalCardFooter>
+          <Button onClick={this.props.delete} isColor='danger'>Delete</Button>
+          <Button onClick={this.toggleWarning}>Cancel</Button>          
+        </ModalCardFooter>
+</ModalCard>
+</Modal>
+</div>
     );
   }
 }

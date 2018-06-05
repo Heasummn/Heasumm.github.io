@@ -1,8 +1,9 @@
 import React from 'react'
 import withRouter from "react-router/withRouter";
-import * as routes from '../routes'
-import asyncComponent from '../containers/AsyncComponent';
-const AsyncEditor = asyncComponent(() => import('containers/Editor'));
+import * as routes from 'routes'
+import Section from 'bloomer/lib/layout/Section';
+import Container from 'bloomer/lib/layout/Container';
+import AsyncEditor from 'containers/AsyncEditor'
 
 const AddPost = props => {
   if(!props.isAuthed) {
@@ -22,10 +23,15 @@ const AddPost = props => {
   }
 
   return (
+<Section>
+<Container>
     <AsyncEditor
       submitText="Add Post"
       handleSubmit={addPost}
-    />);
+    />
+</Container>
+</Section>
+  );
 }
 
 export default withRouter(AddPost);
