@@ -1,0 +1,11 @@
+@import "~bulma/sass/utilities/initial-variables";
+
+$title-weight: 400;
+$section-padding: 1.5rem;
+
+@import "~bulma/bulma";
+
+body {
+  margin: 0;
+  padding: 0;
+}
