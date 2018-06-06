@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 
 import 'components/styles/App.scss';
 
@@ -14,7 +14,7 @@ const AsyncAddPostContainer = asyncComponent(() => import('containers/AddPostCon
 
 const App = () => {
   return(
-    <BrowserRouter>
+    <HashRouter>
 <div>
       <AsyncNavigation />
       <Route exact path={routes.HOME} component={() => <AsyncPostsList />}/>
@@ -23,7 +23,7 @@ const App = () => {
       <Route exact path={routes.LOGOUT} component={() => <AsyncLogOut />} />
       <Route exact path={routes.ADD_POST} component={() => <AsyncAddPostContainer />} />
 </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
