@@ -12,7 +12,5 @@ deploy:
   skip_cleanup: true
   github_token: $github_token
   local_dir: build
-  target-branch: master
-  fqdn: heasummn.me
   on:
-    branch: code
+    branch: master
